@@ -48,6 +48,23 @@ str(activity)
 library(dplyr)
 ```
 
+```
+## 
+## Attaching package: 'dplyr'
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
 ### Let's transform the "date" variable into the appropriate "Date" format
 
 ```r
@@ -60,7 +77,9 @@ diff.Date(range(activity$date))
 ```
 
 ## What is the total number of steps taken per day?
+
 1. Calucate the total number of steps taken per day
+
 ### We have to groups the data by date and calculate the mean of each group. 
 
 ```r
@@ -80,6 +99,7 @@ head(average_steps)
 ```
 
 2. Make a histogram of the total number of steps taken each day
+
 ### We will, first, calculate the total number of steps per day. Then, we will construct the histogram. 
 
 
@@ -106,6 +126,7 @@ hist(total_steps$total, breaks=15, col = "magenta", xlab= "total number of steps
 ![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
 
 3. Calculate and report the mean and median of the total number of steps taken per day
+
 ### In step 2 (above), we have calculaed the "total_steps" taken for each day. Using this data, we will calculate the mean and median of the total number of steps. 
 
 
@@ -143,6 +164,7 @@ median
 
 ## What is the average daily activity pattern?
 1. Make a time series plot (i.e. 𝚝𝚢𝚙𝚎 = "𝚕") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days(y-axis)
+
 ### Let's calculate the average number of steps taken for each day on a 5-minute interval
 
 ```r
@@ -175,7 +197,8 @@ with(interval_steps, plot(interval, steps, type="l", col="blue", main="Average D
 
 ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
 
-2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?\n
+2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+
 ### We can filter the interval that has the maximum number of steps using the "filter" function
 
 ```r
@@ -186,9 +209,11 @@ filter(interval_steps, interval_steps$steps== max(interval_steps$steps))
 ##   interval    steps
 ## 1      835 206.1698
 ```
+
 #### Our calculation indicate that tthe interval 835 has the maximum number of steps. This value agrees with what we see in the "Average Daily Activity Pattern" figure above.
 
 ## Imputing Missing Values
+
 1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with 𝙽𝙰s)
 
 ```r
@@ -207,6 +232,7 @@ activity$steps[is.na(activity$steps)] = mean(activity$steps, na.rm=TRUE)
 ```
 
 3. Create a new dataset that is equal to the original dataset but with the missing data filled in.
+
 ### Using the imputation method described above, we will replace all missing values and creat a histogram witht the imputed data. 
 
 ```r
@@ -233,7 +259,9 @@ hist(imputed_steps$total, breaks=15, col = "green", xlab= "total number of steps
 ![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png)
 ## Are there differences in activity patterns between weekdays and weekends?
 1. Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
+
 ### Let's create a new variable that has a new column (day) that indicates the weekday for each value of the "date" variable
+
 
 ```r
 wk_wd <- mutate(activity, days=ifelse (weekdays(activity$date) %in% c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"), "weekday", "weekend"))
@@ -259,7 +287,9 @@ dim(wk_wd)
 ```
 
 2. Make a panel plot containing a time series plot (i.e. 𝚝𝚢𝚙𝚎 = "𝚕") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). 
-### We will, now, filter the weekdays and weekends from the "wk_wd" dataset and plot the average number of steps for each set
+
+### We will, now, filter the weekdays and weekends from the "wk_wd" dataset and plot the average numbers of steps for each set
+
 
 ```r
 par(mfrow=c(2,1))
